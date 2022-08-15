@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Modal from "./components/Modal";
+import OpenModal from "./components/OpenModal";
+import MultiStepForm from "./components/MultiStepForm";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const open = () => setIsOpen(true);
+  const closed = () => setIsOpen(false);
+  const openForm = () => setIsFormOpen(true);
+  const closedForm = () => setIsFormOpen(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <button onClick={open}>open</button>
+      <Modal isOpen={isOpen}>
+        <OpenModal closed={closed} />
+      </Modal>
+      <button onClick={openForm}>open form</button>
+      <Modal isOpen={isFormOpen}>
+        <MultiStepForm
+          isOpen={openForm}
+          closed={closedForm}
+          handleSubmit={handleSubmit}
+        />
+      </Modal>
+    </>
   );
-}
-
+};
 export default App;
